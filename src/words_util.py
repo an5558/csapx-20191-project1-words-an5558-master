@@ -9,6 +9,11 @@ Author: Ayane Naito
 import csv
 
 def read_words(file):
+    """
+    Reads a given csv file and puts the unigrams in a dictionary with the total number of occurrences.
+    :param file: The unigram file containing data on occurrences
+    :return: A dictionary that uses the unigram as a key and contains the total number of occurrences of that unigram
+    """
     reader = csv.reader(open(file))
     dict = {}
     for row in reader:

@@ -1,7 +1,7 @@
 """
 CSAPX Project 1: Zipf's Law
 
-Counts the number of occurences of a word in a year, given the word and file.
+Counts the number of occurrences of a word in a year, given the word and file containing data.
 
 Author: Ayane Naito
 """
