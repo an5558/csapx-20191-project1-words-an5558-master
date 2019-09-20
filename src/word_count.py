@@ -11,13 +11,17 @@ import sys
 import os
 
 def main():
+    words = {}
     parser = argparse.ArgumentParser()
     parser.add_argument("word", help="a word to display the total occurrences of")
     parser.add_argument("filename", help="a comma separated value unigram file")
     args = parser.parse_args()
     print(args.word)
     if os.path.isfile(args.filename):
-        pass
+        if args.word in words:
+            pass
+        else:
+            sys.stderr.write("Error: " + str(args.word) + " does not appear!")
     else:
        sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 
