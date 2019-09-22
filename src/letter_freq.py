@@ -9,6 +9,7 @@ Author: Ayane Naito
 import argparse
 import sys
 import os
+from src import words_util
 
 def main():
     parser = argparse.ArgumentParser()
@@ -17,7 +18,9 @@ def main():
     parser.add_argument("-p", "--plot", help="plot letter frequencies using matplotlib")
     args = parser.parse_args()
     if os.path.isfile(args.filename):
-        pass
+        letters, sum_letters = words_util.read_letters(args.filename)
+        print(letters)
+        print(sum_letters)
     else:
         sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 
