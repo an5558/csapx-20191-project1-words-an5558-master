@@ -41,4 +41,11 @@ def read_letters(file):
                 sum_total_letters += 1
     return dict1, sum_total_letters
 
+
 def calc_frequency(dict1, sum_total_letters):
+    lst = []
+    for item in dict1.items():
+        lst.append(Letter(
+            name=item[0],
+            freq=int(item[1]/sum_total_letters),
+        ))
