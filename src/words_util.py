@@ -10,6 +10,8 @@ import csv
 import collections
 
 Letter = collections.namedtuple('Letter', ['name', 'freq'])
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 def read_words(file):
     """
@@ -44,8 +46,15 @@ def read_letters(file):
 
 def calc_frequency(dict1, sum_total_letters):
     lst = []
-    for item in dict1.items():
-        lst.append(Letter(
-            name=item[0],
-            freq=int(item[1]/sum_total_letters),
-        ))
+    for entry in alphabet:
+        if entry in dict1:
+            lst.append(Letter(
+                name=entry,
+                freq=float((dict1[entry]/sum_total_letters)),
+            ))
+        else:
+            lst.append(Letter(
+                name=entry,
+                freq=0.0
+            ))
+    return lst

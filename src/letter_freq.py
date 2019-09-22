@@ -18,9 +18,10 @@ def main():
     parser.add_argument("-p", "--plot", help="plot letter frequencies using matplotlib")
     args = parser.parse_args()
     if os.path.isfile(args.filename):
-        letters, sum_letters = words_util.read_letters(args.filename)
-        print(letters)
-        print(sum_letters)
+        letters, sum_total_letters = words_util.read_letters(args.filename)
+        letter_freq = words_util.calc_frequency(letters, sum_total_letters)
+        for entry in letter_freq:
+            print(entry[0] + ": " + str(entry[1]))
     else:
         sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 
