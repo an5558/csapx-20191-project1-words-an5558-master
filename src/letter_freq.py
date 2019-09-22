@@ -12,16 +12,24 @@ import os
 from src import words_util
 
 def main():
+    """
+    Adds positional and optional arguments that allow the user to specify whether the user would like the
+    calculated letter frequencies to be returned via standard output or plotted using matplotlib. Runs the
+    methods needed to read the given file and calculate letter frequency, then returns the result based on
+    what the user specifies.
+    :return:
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("filename", help="a comma separated value unigram file")
-    parser.add_argument("-o", "--output", help="display letter frequencies to standard output")
-    parser.add_argument("-p", "--plot", help="plot letter frequencies using matplotlib")
+    parser.add_argument("-o", "--output", help="display letter frequencies to standard output", action="store_true")
+    parser.add_argument("-p", "--plot", help="plot letter frequencies using matplotlib", action="store_true")
     args = parser.parse_args()
     if os.path.isfile(args.filename):
         letters, sum_total_letters = words_util.read_letters(args.filename)
         letter_freq = words_util.calc_frequency(letters, sum_total_letters)
-        for entry in letter_freq:
-            print(entry[0] + ": " + str(entry[1]))
+        if args.output:
+            for entry in letter_freq:
+                print(entry[0] + ": " + str(entry[1]))
     else:
         sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 
