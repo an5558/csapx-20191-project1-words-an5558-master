@@ -15,7 +15,7 @@ name (str): the letter
 freq (float): the frequency that the letter appears in the file
 """
 Letter = collections.namedtuple('Letter', ['name', 'freq'])
-Word = collections.namedtuple('Word', ['name', 'freq'])
+Word = collections.namedtuple('Word', ['name', 'freq', 'occ'])
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -88,8 +88,9 @@ def calc_freq_words(dict1, total_words):
     for key in dict1:
         if len(lst) == 0:
             lst.append(Word(
-               name=key,
-               freq=float((dict1[key])/total_words),
+                name=key,
+                freq=float((dict1[key])/total_words),
+                occ=int(dict1[key]),
            ))
         else:
             for idx in range(0, len(lst)):
@@ -97,6 +98,7 @@ def calc_freq_words(dict1, total_words):
                     lst.insert(idx, Word(
                         name=key,
                         freq=float((dict1[key])/total_words),
+                        occ=int(dict1[key]),
                     ))
     return lst
 
