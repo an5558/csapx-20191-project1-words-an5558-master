@@ -13,6 +13,11 @@ import collections
 Letter:
 name (str): the letter
 freq (float): the frequency that the letter appears in the file
+
+Word:
+name (str): the word
+freq (float): the frequency that the word appears in the file
+occ ('int'): the total number of times that a word occurred
 """
 Letter = collections.namedtuple('Letter', ['name', 'freq'])
 Word = collections.namedtuple('Word', ['name', 'freq', 'occ'])
@@ -23,7 +28,8 @@ def read_words(file):
     """
     Reads a given csv file and puts the unigrams in a dictionary with the total number of occurrences.
     :param file: The unigram file containing data on occurrences
-    :return: A dictionary that uses the unigram as a key and contains the total number of occurrences of that unigram
+    :return: A dictionary that uses the unigram as a key and contains the total number of occurrences of that unigram,
+    an int that is the total number of words across all years recorded in the given file.
     """
     reader = csv.reader(open(file))
     dict1 = {}
@@ -62,8 +68,8 @@ def read_letters(file):
 
 def calc_freq_letters(dict1, sum_total_letters):
     """
-    Calculates the frequency that a letter appears based on a dictionary containing the number of occurrences of each letter
-    and an int that is the total number of letters in the file.
+    Calculates the frequency that a letter appears based on a dictionary containing the number of occurrences of each
+    letter and an int that is the total number of letters in the file.
     :param dict1: A dictionary containing the number of occurrences of each letter in the file
     :param sum_total_letters: An int that is the total number of letters in the file.
     :return: A list containing namedtuples, which contain the letter and its corresponding frequency
@@ -84,6 +90,14 @@ def calc_freq_letters(dict1, sum_total_letters):
 
 
 def calc_freq_words(dict1, total_words):
+    """
+    Calculates the frequency that a word appears based on a dictionary containing the number of occurrences of
+    word and an int that is the total number of words recorded in the file.
+    :param dict1: A dictionary containing the number of occurrences of words in the file.
+    :param total_words: An int that is the total number of words recorded in the file.
+    :return: A list ordered from highest to lowest frequncy containing namedtuples, which contain the word, its
+    corresponding frequency, and its total number of occurrences.
+    """
     lst = []
     for key in dict1:
         if len(lst) == 0:
@@ -104,6 +118,12 @@ def calc_freq_words(dict1, total_words):
 
 
 def calc_rank(word, lst):
+    """
+    Calculates the rank of a word in an ordered list by finding the given word in the list and returning its index + 1.
+    :param word: The word that the method should find the ranking for
+    :param lst: The namedtuple list in which the ranking of the word should be looked for
+    :return: An int that is the rank of the given word in the list
+    """
     for idx in range(0, len(lst)):
         if lst[idx].name == word:
             return idx + 1

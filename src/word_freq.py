@@ -1,11 +1,10 @@
 """
 CSAPX Project 1: Zipf's Law
 
-
+Computes the frequency of each word across the total occurrences of all words over all years.
 
 Author: Ayane Naito
 """
-
 
 import argparse
 import sys
@@ -13,6 +12,13 @@ import os
 from src import words_util
 
 def main():
+    """
+    Adds positional and optional arguments that allow the user to specify if the user would like to display the rankings
+    of overall word frequencies and their total occurrences (and up to what rank), or if they would like the results to
+    be plotted using matplotlib. Runs methods needed to read the given file and calculate word frequency and ranking, then
+    returns the result based on user specification.
+    :return: None
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("word", help="a word to display the overall ranking of")
     parser.add_argument("filename", help="a comma separated value unigram file")
@@ -26,8 +32,11 @@ def main():
             print(word_freq)
             print(str(args.word) + " is ranked #" + str(words_util.calc_rank(args.word, word_freq)))
             if args.output:
-                for idx in range(0, int(args.output)):
-                    print("#" + str(idx + 1) + ": " + str(word_freq[idx].name) + "->" + str(word_freq[idx].occ))
+                if int(args.output) <= len(word_freq):
+                    for idx in range(0, int(args.output)):
+                        print("#" + str(idx + 1) + ": " + str(word_freq[idx].name) + "->" + str(word_freq[idx].occ))
+                else:
+                    sys.stderr.write("Error: " + str(args.ouput) + " is greater than the number of words in " + str(args.filename))
         else:
             sys.stderr.write("Error: " + str(args.word) + " does not appear in " + str(args.filename))
     else:

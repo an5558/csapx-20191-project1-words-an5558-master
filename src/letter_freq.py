@@ -17,7 +17,7 @@ def main():
     calculated letter frequencies to be returned via standard output or plotted using matplotlib. Runs the
     methods needed to read the given file and calculate letter frequency, then returns the result based on
     what the user specifies.
-    :return:
+    :return: None
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("filename", help="a comma separated value unigram file")
