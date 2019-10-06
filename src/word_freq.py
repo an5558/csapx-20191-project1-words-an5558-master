@@ -19,6 +19,10 @@ def main():
     parser.add_argument("-o", "--output", help="display the top OUTPUT (#) ranked words by number of occurrences", action="store_true")
     parser.add_argument("-p", "--plot", help="plot the word rankings from top to bottom based on occurrences", action="store_true")
     args = parser.parse.args()
+    if os.path.isfile(args.filename):
+        pass
+    else:
+        sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 
 if __name__ == '__main__':
     main()
