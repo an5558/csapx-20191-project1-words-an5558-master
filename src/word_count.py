@@ -25,7 +25,7 @@ def main():
     parser.add_argument("filename", help="a comma separated value unigram file")
     args = parser.parse_args()
     if os.path.isfile(args.filename):
-        words = words_util.read_words(args.filename)
+        words = words_util.read_words(args.filename)[0]
         if args.word in words:
             print(args.word + ": " + str(words[args.word]))
         else:

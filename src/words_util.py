@@ -15,6 +15,7 @@ name (str): the letter
 freq (float): the frequency that the letter appears in the file
 """
 Letter = collections.namedtuple('Letter', ['name', 'freq'])
+Word = collections.namedtuple('Word', ['name', 'freq'])
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -26,12 +27,15 @@ def read_words(file):
     """
     reader = csv.reader(open(file))
     dict1 = {}
+    total_words = 0
     for row in reader:
         if row[0] in dict1:
             dict1[row[0]] = int(dict1[row[0]]) + int(row[2])
+            total_words += int(row[2])
         else:
             dict1[row[0]] = int(row[2])
-    return dict1
+            total_words += int(row[2])
+    return dict1, total_words
 
 
 def read_letters(file):
@@ -48,15 +52,15 @@ def read_letters(file):
     for row in reader:
         for letter in row[0]:
             if letter in dict1:
-                dict1[letter] = int(dict1[letter]) + 1
-                sum_total_letters += 1
+                dict1[letter] = int(dict1[letter]) + int(row[2])
+                sum_total_letters += int(row[2])
             else:
-                dict1[letter] = 1
-                sum_total_letters += 1
+                dict1[letter] = int(row[2])
+                sum_total_letters += int(row[2])
     return dict1, sum_total_letters
 
 
-def calc_frequency(dict1, sum_total_letters):
+def calc_freq_letters(dict1, sum_total_letters):
     """
     Calculates the frequency that a letter appears based on a dictionary containing the number of occurrences of each letter
     and an int that is the total number of letters in the file.
@@ -65,15 +69,33 @@ def calc_frequency(dict1, sum_total_letters):
     :return: A list containing namedtuples, which contain the letter and its corresponding frequency
     """
     lst = []
-    for entry in alphabet:
-        if entry in dict1:
+    for key in alphabet:
+        if key in dict1:
             lst.append(Letter(
-                name=entry,
-                freq=float((dict1[entry]/sum_total_letters)),
+                name=key,
+                freq=float((dict1[key])/sum_total_letters),
             ))
         else:
             lst.append(Letter(
-                name=entry,
-                freq=0.0
+                name=key,
+                freq=0.0,
             ))
+    return lst
+
+
+def calc_freq_words(dict1, total_words):
+    lst = []
+    for key in dict1:
+        if len(lst) == 0:
+            lst.append(Word(
+               name=key,
+               freq=float((dict1[key])/total_words),
+           ))
+        else:
+            for idx in range(0, len(lst)):
+                if dict1[key]/total_words > lst[idx].freq:
+                    lst.insert(idx, Word(
+                        name=key,
+                        freq=float((dict1[key])/total_words),
+                    ))
     return lst

@@ -26,7 +26,7 @@ def main():
     args = parser.parse_args()
     if os.path.isfile(args.filename):
         letters, sum_total_letters = words_util.read_letters(args.filename)
-        letter_freq = words_util.calc_frequency(letters, sum_total_letters)
+        letter_freq = words_util.calc_freq_letters(letters, sum_total_letters)
         if args.output:
             for entry in letter_freq:
                 print(entry[0] + ": " + str(entry[1]))
