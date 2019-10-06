@@ -24,7 +24,7 @@ def main():
         if args.word in words:
             word_freq = words_util.calc_freq_words(words, total_words)
             print(word_freq)
-            # print(str(args.word) + " is ranked #" + str(word_freq.index(args.word)))
+            print(str(args.word) + " is ranked #" + str(words_util.calc_rank(args.word, word_freq)))
         else:
             sys.stderr.write("Error: " + str(args.word) + " does not appear in " + str(args.filename))
     else:

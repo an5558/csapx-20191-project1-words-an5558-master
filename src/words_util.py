@@ -99,3 +99,9 @@ def calc_freq_words(dict1, total_words):
                         freq=float((dict1[key])/total_words),
                     ))
     return lst
+
+
+def calc_rank(word, lst):
+    for idx in range(0, len(lst)):
+        if lst[idx].name == word:
+            return idx + 1
