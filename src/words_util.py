@@ -22,6 +22,7 @@ occ ('int'): the total number of times that a word occurred
 Letter = collections.namedtuple('Letter', ['name', 'freq'])
 Word = collections.namedtuple('Word', ['name', 'freq', 'occ'])
 Year = collections.namedtuple('Year', ['year', 'occ'])
+Wordlen = collections.namedtuple('Wordlen', ['year', 'avg'])
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -43,6 +44,7 @@ def read_words(file):
             dict1[row[0]] = int(row[2])
             total_words += int(row[2])
     return dict1, total_words
+
 
 def read_words_years(file):
     reader = csv.reader(open(file))
@@ -66,6 +68,7 @@ def read_words_years(file):
             dict1[row[0]] = temp
             total_words += int(row[2])
     return dict1, total_words
+
 
 def read_letters(file):
     """
@@ -150,3 +153,19 @@ def calc_rank(word, lst):
     for idx in range(0, len(lst)):
         if lst[idx].name == word:
             return idx + 1
+
+def calc_wordlen_avg(start, end, dict1, total_word):
+    lst = []
+    for yr in range(int(start), int(end) + 1):
+        sum_letters = 0
+        total_words = 0
+        for key in dict1:
+            for entry in dict1[key]:
+                if entry.year == yr:
+                    sum_letters += (len(key) * entry.occ)
+                    total_words += entry.occ
+        lst.append(Wordlen(
+            year=int(yr),
+            avg=float(sum_letters/total_words),
+        ))
+    return lst

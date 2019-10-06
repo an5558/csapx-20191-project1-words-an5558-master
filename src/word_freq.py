@@ -23,7 +23,8 @@ def main():
     parser.add_argument("word", help="a word to display the overall ranking of")
     parser.add_argument("filename", help="a comma separated value unigram file")
     parser.add_argument("-o", "--output", help="display the top OUTPUT (#) ranked words by number of occurrences")
-    parser.add_argument("-p", "--plot", help="plot the word rankings from top to bottom based on occurrences", action="store_true")
+    parser.add_argument("-p", "--plot", help="plot the word rankings from top to bottom based on occurrences",
+                        action="store_true")
     args = parser.parse_args()
     if os.path.isfile(args.filename):
         words, total_words = words_util.read_words(args.filename)
