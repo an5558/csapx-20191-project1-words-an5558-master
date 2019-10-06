@@ -10,6 +10,8 @@ import argparse
 import sys
 import os
 from src import words_util
+import numpy as np
+import matplotlib.pyplot as plt
 
 def main():
     """
@@ -30,6 +32,17 @@ def main():
         if args.output:
             for entry in letter_freq:
                 print(entry[0] + ": " + str(entry[1]))
+        if args.plot:
+            x = []
+            y = []
+            for entry in letter_freq:
+                x.append(entry.name)
+                y.append(entry.freq)
+            plt.bar(x, y, width=0.8)
+            plt.title("Letter Frequencies: " + str(args.filename))
+            plt.xlabel("Letters")
+            plt.ylabel("Frequency")
+            plt.show()
     else:
         sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 
