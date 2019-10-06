@@ -21,7 +21,9 @@ def main():
     parser.add_argument("-p", "--plot", help="plot the average word lengths over years")
     args = parser.parse_args()
     if os.path.isfile(args.filename):
-        pass
+        words, total_words = words_util.read_words_years(args.filename)
+        print(words)
+        print(total_words)
     else:
         sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 

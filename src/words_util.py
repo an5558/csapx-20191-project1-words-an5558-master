@@ -21,6 +21,7 @@ occ ('int'): the total number of times that a word occurred
 """
 Letter = collections.namedtuple('Letter', ['name', 'freq'])
 Word = collections.namedtuple('Word', ['name', 'freq', 'occ'])
+Year = collections.namedtuple('Year', ['year', 'occ'])
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -43,6 +44,28 @@ def read_words(file):
             total_words += int(row[2])
     return dict1, total_words
 
+def read_words_years(file):
+    reader = csv.reader(open(file))
+    dict1 = {}
+    total_words = 0
+    for row in reader:
+        if row[0] in dict1:
+            temp = dict1[row[0]]
+            temp.append(Year(
+                year=int(row[1]),
+                occ=int(row[2]),
+            ))
+            dict1[row[0]] = temp
+            total_words += int(row[2])
+        else:
+            temp = []
+            temp.append(Year(
+                year=int(row[1]),
+                occ=int(row[2]),
+            ))
+            dict1[row[0]] = temp
+            total_words += int(row[2])
+    return dict1, total_words
 
 def read_letters(file):
     """
