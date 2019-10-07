@@ -10,6 +10,8 @@ import argparse
 import sys
 import os
 from src import words_util
+import numpy as np
+import matplotlib.pyplot as plt
 
 def main():
     """
@@ -30,14 +32,32 @@ def main():
         words, total_words = words_util.read_words(args.filename)
         if args.word in words:
             word_freq = words_util.calc_freq_words(words, total_words)
-            print(word_freq)
             print(str(args.word) + " is ranked #" + str(words_util.calc_rank(args.word, word_freq)))
             if args.output:
                 if int(args.output) <= len(word_freq):
                     for idx in range(0, int(args.output)):
                         print("#" + str(idx + 1) + ": " + str(word_freq[idx].name) + "->" + str(word_freq[idx].occ))
                 else:
-                    sys.stderr.write("Error: " + str(args.ouput) + " is greater than the number of words in " + str(args.filename))
+                    sys.stderr.write("Error: " + str(args.ouput) + " is greater than the number of words in " +
+                                     str(args.filename))
+            if args.plot:
+                x = []
+                y = []
+                targetx = 0
+                targety = 0
+                for idx in range (0, len(word_freq)):
+                    if word_freq[idx].name == args.word:
+                        targetx = idx + 1
+                        targety = word_freq[idx].occ
+                    x.append(idx + 1)
+                    y.append(word_freq[idx].occ)
+                plt.loglog(x, y)
+                plt.plot(targetx, targety, '*')
+                plt.text(targetx, targety, args.word)
+                plt.title("Word Frequencies: " + str(args.filename))
+                plt.xlabel("Rank of word('" + str(args.word) + "' is rank " + str(targetx) + ")")
+                plt.ylabel("Total number of Occurrences")
+                plt.show()
         else:
             sys.stderr.write("Error: " + str(args.word) + " does not appear in " + str(args.filename))
     else:
