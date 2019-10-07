@@ -17,8 +17,8 @@ def main():
     """
     Adds positional and optional arguments that allow the user to specify if the user would like to display the rankings
     of overall word frequencies and their total occurrences (and up to what rank), or if they would like the results to
-    be plotted using matplotlib. Runs methods needed to read the given file and calculate word frequency and ranking, then
-    returns the result based on user specification.
+    be plotted using matplotlib. Runs methods needed to read the given file and calculate word frequency and ranking,
+    then returns the result based on user specification.
     :return: None
     """
     parser = argparse.ArgumentParser()

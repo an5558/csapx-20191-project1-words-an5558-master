@@ -18,6 +18,14 @@ Word:
 name (str): the word
 freq (float): the frequency that the word appears in the file
 occ ('int'): the total number of times that a word occurred
+
+Year:
+year (int): the year that the data of the word was collected for
+occ (int): the number of times that the word has appeared in that year
+
+Wordlen:
+year (int): the year that the average word length was calculated for
+avg (float): the average word length of that year
 """
 Letter = collections.namedtuple('Letter', ['name', 'freq'])
 Word = collections.namedtuple('Word', ['name', 'freq', 'occ'])
@@ -47,9 +55,15 @@ def read_words(file):
 
 
 def read_words_years(file):
+    """
+    Reads a given csv file and puts the unigrams in a dictionary with the year the data came from
+    and the total number of occurrences of that word for that year.
+    :param file: The csv file containing the unigrams and the corresponding data
+    :return: A dictionary that uses the unigram as a key and contains the year that the data for the
+    word was collected from and the total number of occurrences of the word in that year.
+    """
     reader = csv.reader(open(file))
     dict1 = {}
-    total_words = 0
     for row in reader:
         if row[0] in dict1:
             temp = dict1[row[0]]
@@ -58,7 +72,6 @@ def read_words_years(file):
                 occ=int(row[2]),
             ))
             dict1[row[0]] = temp
-            total_words += int(row[2])
         else:
             temp = []
             temp.append(Year(
@@ -66,8 +79,7 @@ def read_words_years(file):
                 occ=int(row[2]),
             ))
             dict1[row[0]] = temp
-            total_words += int(row[2])
-    return dict1, total_words
+    return dict1
 
 
 def read_letters(file):
@@ -76,7 +88,8 @@ def read_letters(file):
     Puts the results into a dictionary with the key as the letter.
     Counts the total number of letters in the file.
     :param file: The given csv file containing unigrams
-    :return: A dictionary containing letters and their occurrences, an int value that is the sum of all letters in the file.
+    :return: A dictionary containing letters and their occurrences, an int value that is the sum of all letters
+     in the file.
     """
     reader = csv.reader(open(file))
     dict1 = {}
@@ -121,7 +134,7 @@ def calc_freq_words(dict1, total_words):
     word and an int that is the total number of words recorded in the file.
     :param dict1: A dictionary containing the number of occurrences of words in the file.
     :param total_words: An int that is the total number of words recorded in the file.
-    :return: A list ordered from highest to lowest frequncy containing namedtuples, which contain the word, its
+    :return: A list ordered from highest to lowest frequency containing namedtuples, which contain the word, its
     corresponding frequency, and its total number of occurrences.
     """
     lst = []
@@ -154,7 +167,17 @@ def calc_rank(word, lst):
         if lst[idx].name == word:
             return idx + 1
 
-def calc_wordlen_avg(start, end, dict1, total_word):
+def calc_wordlen_avg(start, end, dict1):
+    """
+    Calculates the average word length for each year given a start year and an end year (inclusive)
+    and a dictionary containing the unigrams with the year the data was collected from and the total number
+    of occurrences of that word in that year.
+    :param start: The starting year that the average word length should be calculated for
+    :param end: The ending year that the average word length should be calculated for
+    :param dict1: The dictionary that uses the unigram as a key and contains the year that the data for the
+    word was collected from and the total number of occurrences of the word in that year
+    :return: A list of namedtuples of years and the average word length for that year
+    """
     lst = []
     for yr in range(int(start), int(end) + 1):
         sum_letters = 0

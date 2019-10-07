@@ -1,7 +1,8 @@
 """
 CSAPX Project 1: Zipf's Law
 
-
+Calculates the average word length of a set of data for each year in a given range of years. Displays the
+results by either printing them or plotting them using matplotlib based on user input.
 
 Author: Ayane Naito
 """
@@ -15,6 +16,13 @@ import matplotlib.pyplot as plt
 
 
 def main():
+    """
+    Adds positional and optional arguments that allow the user to specify if the user would like to display the average
+    word length for each year by printing the results, or if they would like the results to be plotted using matplotlib.
+    Runs methods needed to read the given file and calculate the average word length for each year, then returns the
+    results based on user input.
+    :return: None
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("start", help="the starting year range")
     parser.add_argument("end", help="the ending year range")
@@ -23,8 +31,8 @@ def main():
     parser.add_argument("-p", "--plot", help="plot the average word lengths over years", action="store_true")
     args = parser.parse_args()
     if os.path.isfile(args.filename):
-        words, total_words = words_util.read_words_years(args.filename)
-        word_len_avg = words_util.calc_wordlen_avg(args.start, args.end, words, total_words)
+        words = words_util.read_words_years(args.filename)
+        word_len_avg = words_util.calc_wordlen_avg(args.start, args.end, words)
         if args.output:
             for entry in word_len_avg:
                 print(str(entry.year) + ": " + str(entry.avg))
