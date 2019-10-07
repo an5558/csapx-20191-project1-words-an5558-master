@@ -10,6 +10,8 @@ import argparse
 import sys
 import os
 from src import words_util
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -26,6 +28,17 @@ def main():
         if args.output:
             for entry in word_len_avg:
                 print(str(entry.year) + ": " + str(entry.avg))
+        if args.plot:
+            x = []
+            y = []
+            for entry in word_len_avg:
+                x.append(entry.year)
+                y.append(entry.avg)
+            plt.plot(x, y)
+            plt.title("Average word lengths from " + str(args.start) + " to " + str(args.end) + ": " + str(args.filename))
+            plt.xlabel("Year")
+            plt.ylabel("Average word length")
+            plt.show()
     else:
         sys.stderr.write("Error: " + str(args.filename) + " does not exist!")
 
